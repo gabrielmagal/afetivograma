@@ -4,9 +4,11 @@ import br.com.afetivograma.model.entity.AfetivogramaEntity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 public class AfetivogramaDto {
+    private UUID id;
     private String username;
     private LocalDateTime localDateTime;
     private boolean euforia_agitacao_aceleracao_agressividade;
@@ -17,6 +19,7 @@ public class AfetivogramaDto {
 
     public AfetivogramaEntity toEntity() {
         AfetivogramaEntity afetivogramaEntity = new AfetivogramaEntity();
+        afetivogramaEntity.setId(id);
         afetivogramaEntity.setLocalDateTime(localDateTime);
         afetivogramaEntity.setUsername(getUsername());
         afetivogramaEntity.setEuforia_agitacao_aceleracao_agressividade(isEuforia_agitacao_aceleracao_agressividade());

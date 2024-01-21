@@ -9,6 +9,9 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,6 +25,10 @@ public class UserRepresentationDto extends UserRepresentation {
         setFirstName(userDto.getFirstName());
         setLastName(userDto.getLastName());
         setEnabled(userDto.getEnabled());
+
+        Map<String, List<String>> attributes = new HashMap<>();
+        attributes.put("PSYCHOLOGIST", List.of(userDto.getPsychologist()));
+        setAttributes(attributes);
 
         CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
         credentialRepresentation.setType("password");

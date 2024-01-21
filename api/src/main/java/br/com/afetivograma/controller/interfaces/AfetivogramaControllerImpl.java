@@ -6,6 +6,7 @@ import br.com.afetivograma.view.dto.AfetivogramaPercentDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public interface AfetivogramaControllerImpl {
     void createAfetivograma(AfetivogramaDto afetivogramaDto);
@@ -15,4 +16,5 @@ public interface AfetivogramaControllerImpl {
     AfetivogramaPercentDto getAfetivogramaPeriodPercent(PeriodoAfetivogramaEnum periodoAfetivogramaEnum);
     List<AfetivogramaDto> getAfetivogramaPeriod(LocalDateTime localDateTimeEntre, LocalDateTime localDateTimeAte);
     AfetivogramaPercentDto getAfetivogramaPeriodPercent(LocalDateTime localDateTimeEntre, LocalDateTime localDateTimeAte);
+    void deleteUser(UUID uuid);
 }

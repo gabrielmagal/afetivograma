@@ -12,6 +12,7 @@ import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Authenticated
 @Path("afetivograma")
@@ -60,5 +61,11 @@ public class AfetivogramaResource {
     @Path("/by-period-custom/percent")
     public AfetivogramaPercentDto getUserByUsernamePercent(@QueryParam("entre") LocalDateTime localDateTimeEntre, @QueryParam("ate") LocalDateTime localDateTimeAte) {
         return afetivogramaControllerImpl.getAfetivogramaPeriodPercent(localDateTimeEntre, localDateTimeAte);
+    }
+
+    @DELETE
+    @Path("/{uuid}")
+    public void deleteUser(@PathParam("uuid") UUID uuid) {
+        afetivogramaControllerImpl.deleteUser(uuid);
     }
 }

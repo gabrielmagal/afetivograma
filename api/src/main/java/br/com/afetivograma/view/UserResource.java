@@ -7,8 +7,13 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.keycloak.representations.AccessTokenResponse;
+import org.keycloak.representations.idm.RoleRepresentation;
 
-@Path("user")
+import java.util.List;
+import java.util.UUID;
+
+@Path("/user")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
@@ -16,8 +21,20 @@ public class UserResource {
     UserControllerImpl userControllerImpl;
 
     @POST
+    @Path("/{username}/{password}")
+    public AccessTokenResponse generateToken(@PathParam("username") String username, @PathParam("password") String password) {
+        return userControllerImpl.generateToken(username, password);
+    }
+
+    @POST
     public void createUser(@RequestBody UserDto userDto) {
         userControllerImpl.createUser(userDto);
+    }
+
+    @GET
+    @Path("/roles")
+    public List<RoleRepresentation> getROlesAllowed() {
+        return userControllerImpl.getRolesAllowed();
     }
 
     @POST
@@ -28,7 +45,7 @@ public class UserResource {
     }
 
     @GET
-    @Path("/{username}")
+    @Path("/username/{username}")
     @Authenticated
     public UserDto getUserByUsername(@PathParam("username") String username) {
         return userControllerImpl.getUserByUsername(username);
@@ -37,7 +54,7 @@ public class UserResource {
     @GET
     @Path("/{id}")
     @Authenticated
-    public UserDto getUserById(@PathParam("id") String id) {
+    public UserDto getUserById(@PathParam("id") UUID id) {
         return userControllerImpl.getUserById(id);
     }
 }

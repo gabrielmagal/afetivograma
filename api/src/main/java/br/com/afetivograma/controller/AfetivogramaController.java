@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 @ApplicationScoped
 public class AfetivogramaController implements AfetivogramaControllerImpl {
@@ -28,6 +30,7 @@ public class AfetivogramaController implements AfetivogramaControllerImpl {
         AfetivogramaEntity afetivogramaEntity = afetivogramaDto.toEntity();
         afetivogramaEntity.setLocalDateTime(LocalDateTime.now());
         afetivogramaEntity.setUsername(jsonWebToken.getName());
+        afetivogramaEntity.setId(null);
         afetivogramaRepositoryImpl.createAfetivograma(afetivogramaEntity);
     }
 
@@ -82,6 +85,14 @@ public class AfetivogramaController implements AfetivogramaControllerImpl {
         return convertListAfetivogramaDtoParaAfetivogramaPercentDto(getAfetivogramaPeriod(localDateTimeEntre, localDateTimeAte));
     }
 
+    @Override
+    public void deleteUser(UUID uuid) {
+        AfetivogramaEntity afetivogramaEntity = afetivogramaRepositoryImpl.getAfetivogramaEntity(uuid);
+        if (Objects.nonNull(afetivogramaEntity) && jsonWebToken.getName().equals(afetivogramaEntity.getUsername())) {
+            afetivogramaRepositoryImpl.deleteUser(afetivogramaEntity);
+        }
+    }
+
     private AfetivogramaPercentDto convertListAfetivogramaDtoParaAfetivogramaPercentDto(List<AfetivogramaDto> afetivogramaDtoList) {
         AfetivogramaPercentDto afetivogramaPercentDto = new AfetivogramaPercentDto();
         afetivogramaDtoList.forEach(afetivogramaDto -> {
@@ -92,7 +103,6 @@ public class AfetivogramaController implements AfetivogramaControllerImpl {
     }
 
     private void converterAfetivogramaDtoParaAfetivogramaPercentDto(AfetivogramaDto afetivogramaDto, AfetivogramaPercentDto afetivogramaPercentDto) {
-        //
         if(afetivogramaDto.isBomhumor_estabilidade())
             afetivogramaPercentDto.setBomhumor_estabilidade(afetivogramaPercentDto.getBomhumor_estabilidade().add(new BigDecimal(100)));
         if(afetivogramaDto.isIrritabilidade_inquietacao_impaciencia())

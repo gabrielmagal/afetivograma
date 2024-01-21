@@ -8,6 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Transactional
 @ApplicationScoped
@@ -18,6 +19,11 @@ public class AfetivogramaRepository implements AfetivogramaRepositoryImpl, Panac
     }
 
     @Override
+    public AfetivogramaEntity getAfetivogramaEntity(UUID uuid) {
+        return find("id", uuid).firstResult();
+    }
+
+    @Override
     public List<AfetivogramaEntity> listAfetivogramaEntity(String username) {
         return find("username", username).list();
     }
@@ -25,5 +31,10 @@ public class AfetivogramaRepository implements AfetivogramaRepositoryImpl, Panac
     @Override
     public List<AfetivogramaEntity> listAfetivogramaEntity(String query, Parameters params) {
         return find(query, params).list();
+    }
+
+    @Override
+    public void deleteUser(AfetivogramaEntity afetivogramaEntity) {
+        delete(afetivogramaEntity);
     }
 }

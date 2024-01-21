@@ -24,6 +24,7 @@ public class AfetivogramaEntity {
     @Transient
     public AfetivogramaDto toDto() {
         AfetivogramaDto afetivogramaDto = new AfetivogramaDto();
+        afetivogramaDto.setId(id);
         afetivogramaDto.setLocalDateTime(localDateTime);
         afetivogramaDto.setUsername(getUsername());
         afetivogramaDto.setEuforia_agitacao_aceleracao_agressividade(isEuforia_agitacao_aceleracao_agressividade());
